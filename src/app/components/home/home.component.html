@@ -1,0 +1,82 @@
+<button class="btn btn-block btn-success" (click)="openModal(content);isEditModal = false;">Add Worker</button> 
+<br>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="search"><i class="fas fa-search"></i></span>
+  </div>
+  <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search" #search>
+</div>
+
+<table class="table table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Full name</th>
+      <th scope="col">Sex</th>
+      <th scope="col">Salary</th>
+      <th scope="col">Contact info</th>
+      <th scope="col">Position</th>
+      <th scope="col">Controls</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let worker of workers | async | search: searchTerm | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+      <td>{{worker.fullName}}</td>
+        <td>{{worker.sex ? 'Male' : 'Female'}}</td>
+        <td>{{worker.salary}}</td>
+        <td>{{worker.contactInfo}}</td>
+        <td>{{worker.position}}</td>
+      <td>
+        <button class="btn btn-xs btn-primary" style="margin: 1px;" (click)="openModal(content, worker);isEditModal = true;"><i
+            class="fas fa-pen"></i></button>
+        <button class="btn btn-xs btn-danger" style="margin: 1px;" (click)="delete(worker._id  )"><i
+            class="fas fa-trash"></i></button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div class="col-12 justify-content-center">
+  <ngb-pagination [collectionSize]="(workers|async).length" [(page)]="page" [pageSize]="pageSize" [maxSize]="3" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+</div>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit worker</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addEditWorkerForm">
+      <div class="form-group">
+        <label for="fullName">Full name</label>
+        <input type="text" class="form-control" id="fullname" formControlName="fullName">
+      </div>
+      <div class="form-group">
+        <label for="salary">Salary</label>
+        <input type="text" class="form-control" id="salary" formControlName="salary">
+      </div>
+      <div class="form-group">
+        <label for="contactInfo">Contact info</label>
+        <input type="text" class="form-control" id="contactInfo" formControlName="contactInfo">
+      </div>
+      <div class="form-group">
+        <label for="position">Position</label>
+        <input type="text" class="form-control" id="position" formControlName="position">
+      </div>
+      <label for="">Sex</label>
+      <br>
+      <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" formControlName="sex">
+        <label ngbButtonLabel class="btn-primary">
+          <input ngbButton type="radio" [value]="true"> Male
+        </label>
+        <label ngbButtonLabel class="btn-primary">
+          <input ngbButton type="radio" [value]="false"> Female
+        </label>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="addEditWorker(addEditWorkerForm.value)">{{ isEditModal ? "Save changes": "Add worker"}}</button>
+  </div>
+</ng-template>
+
+<button class="btn btn-dark" style="position: fixed; right: 5px; bottom: 5px;" (click)="logout()">Logout</button>

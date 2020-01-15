@@ -1,0 +1,22 @@
+<div class="container-sm">
+    <form [formGroup]="signUpForm" (ngSubmit)="signUp(signUpForm.value)">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control form-control-lg" id="username" formControlName="username">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control form-control-lg" id="email" formControlName="email">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control form-control-lg" id="password" formControlName="password">
+        </div>
+        <button type="submit" class="btn btn-success btn-block" [disabled]="signUpForm.invalid">Sign Up</button>
+        <button type="button" class="btn btn-link btn-block" routerLink="/login" routerLinkActive="active">Back to
+            Login</button>
+        <div *ngIf="signUpForm.invalid && (signUpForm.dirty || signUpForm.touched)" class="alert alert-danger">
+            All fields are required.
+        </div>
+    </form>
+</div>  

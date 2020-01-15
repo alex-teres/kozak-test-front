@@ -1,0 +1,14 @@
+<div class="container-sm">
+    <form novalidate>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control form-control-lg" id="username" [(ngModel)]="username" [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control form-control-lg" id="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+        </div>
+        <button type="button" class="btn btn-link btn-block" routerLink="/signUp" routerLinkActive="active">Sign up</button>
+        <button type="button" class="btn btn-primary btn-block" (click)='login(username, password)'>Login</button>
+      </form>
+</div> 
